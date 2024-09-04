@@ -1,0 +1,6 @@
+@MatriculationExamsServer_HostAddress = http://localhost:5182
+
+GET {{MatriculationExamsServer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
