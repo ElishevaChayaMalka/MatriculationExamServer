@@ -7,7 +7,7 @@ using static MatriculationExamsServer.Types.Enums;
 
 namespace MatriculationExamsServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("/[controller]")]
     [ApiController]
     public class MatriculationExamController : ControllerBase
     {

@@ -16,5 +16,9 @@ namespace MatriculationExamsServer.Types
 
 
         }
+        public enum Ranges
+        {
+
+        }
     }
 }
