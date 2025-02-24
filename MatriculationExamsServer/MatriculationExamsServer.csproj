@@ -16,5 +16,6 @@
 	<None Update="matriculationexams-4c178fbf1707.json"></None>
 		
 	</ItemGroup>
+	<ProjectExtensions><VisualStudio><UserProperties ranges_1json__JsonSchema="https://cdn.jsdelivr.net/npm/liblab@latest/liblab.config.schema.json" /></VisualStudio></ProjectExtensions>
 
 </Project>

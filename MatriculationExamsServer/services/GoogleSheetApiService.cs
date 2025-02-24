@@ -40,12 +40,10 @@ namespace MatriculationExamsServer.services
             var response = await request.ExecuteAsync();
             var colors = new List<Color>();
 
-            // בדיקה אם קיימות שורות
             if (response.Sheets.Count > 0 && response.Sheets[0].Data.Count > 0)
             {
                 var rows = response.Sheets[0].Data[0].RowData;
 
-                // לולאה על כל השורות והעמודות
                 foreach (var row in rows)
                 {
                     if (row.Values != null)
@@ -59,7 +57,6 @@ namespace MatriculationExamsServer.services
                             }
                             else
                             {
-                                // אם התא ריק, מוסיפים צבע לבן כברירת מחדל
                                 colors.Add(new Color { Red = 1, Green = 1, Blue = 1, Alpha = 1 });
                             }
                         }

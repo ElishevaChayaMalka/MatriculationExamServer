@@ -25,6 +25,7 @@ namespace MatriculationExamsServer.Controllers
             string sheetName = Enum.GetName(typeof(SheetClassesName), SheetClassesName.TwelfthGrade);
             string description = typeof(SheetClassesName).GetField(sheetName).GetCustomAttribute<DescriptionAttribute>().Description;
             string spreadsheetId = "1_ujxbpru42Pb0NU9kN7y-YyrheMzapDiTE0uSR--k5M";
+
             string range = $"{description}!A:A";
             var data = await _googleSheetApiService.GetSheetDataAsync(spreadsheetId, range);
 

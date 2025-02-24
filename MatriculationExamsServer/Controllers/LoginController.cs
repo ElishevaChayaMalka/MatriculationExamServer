@@ -63,13 +63,14 @@ namespace MatriculationExamsServer.Controllers
                 return BadRequest();
             }
         }
-       // [Authorize]
+       
+        [HttpGet("GetData")]
 
-        [HttpGet]
         public async Task<IActionResult> GetData(string token)
         {
+            
             var handler = new JwtSecurityTokenHandler();
-    
+            token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             if (handler.CanReadToken(token))
             {
                 var jwtToken = handler.ReadJwtToken(token);
@@ -78,15 +79,10 @@ namespace MatriculationExamsServer.Controllers
                 var id = claims.FirstOrDefault(c => c.Type == "id")?.Value;
 
                 string rangeDataSubject = ranges[$"RangeSubject{classNameNumberClaim}Grade"];
-                //var color = await _googleSheetApiService.GetCellBackgroundColorAsync("1_ujxbpru42Pb0NU9kN7y-YyrheMzapDiTE0uSR--k5M", rangeDataSubject);
                 var data = await _loginService.GetExamResults(rangeDataSubject, classNameNumberClaim, ranges,id);
                 return Ok(data);
             }
             return BadRequest();
-
-            //string rangeData = ranges["RangeSubject11Grade"]; //TOKENלשלוף מה
-            //var data = await _loginService.GetExamResults(rangeData);
-            //return Ok(data);
 
 
         }

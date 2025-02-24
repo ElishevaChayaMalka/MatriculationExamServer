@@ -1,17 +1,18 @@
 {
   "RangeID10Grade": "כיתה י' הערכות חלופיות!B:B",
-  "RangeID11Grade": "כיתה י\"א!A:A",
-  "RangeID12Grade": "כיתה י\"ב מחצית א'!B:B",
-  "RangeUserDetails10Grade": "כיתה י' הערכות חלופיות!C1:D1",
-  "RangeUserDetails11Grade": "כיתה י\"א!B1:B1",
-  "RangeUserDetails12Grade": "כיתה י\"ב מחצית א'!C1:C1",
-  "RangeSubject10Grade": "כיתה י' הערכות חלופיות!E1:AL2",
-  "RangeSubject11Grade": "כיתה י\"א!C1:AP2",
-  "RangeSubject12Grade": "כיתה י\"ב מחצית א'!D1:AP2",
+  "RangeID11Grade": "כיתה י\"א!B:B",
+  "RangeID12Grade": "כיתה י\"ב!B:B",
+  "RangeID13Grade": "כיתה י\"ב תשפד!B:B",
+  "RangeUserDetails10Grade": "כיתה י' הערכות חלופיות!C1:C1",
+  "RangeUserDetails11Grade": "כיתה י\"א!C1:D1",
+  "RangeUserDetails12Grade": "כיתה י\"ב!C1:D1",
+  "RangeUserDetails13Grade": "כיתה י\"ב תשפד!C1:D1",
+  "RangeSubject10Grade": "כיתה י' הערכות חלופיות!D1:AP2",
+  "RangeSubject11Grade": "כיתה י\"א!E1:AP2",
+  "RangeSubject12Grade": "כיתה י\"ב!E1:AU2",
+  "RangeSubject13Grade": "כיתה י\"ב תשפד!D1:AV2",
   "RangeExamsUser10": "כיתה י' הערכות חלופיות!E1:AL1",
-  "RangeExamsUser11": "כיתה י\"א!C1:AK1",
-  "RangeExamsUser12": "כיתה י\"ב מחצית א'!D1:AP1"
-
-
-
+  "RangeExamsUser11": "כיתה י\"א!E1:AU1",
+  "RangeExamsUser12": "כיתה י\"ב!E1:AP1",
+  "RangeExamsUser13": "כיתה י\"ב תשפד!D1:AP1"
 }

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Specialized;
 using System.Collections.Immutable;
 using Google.Apis.Sheets.v4;
+using System.Drawing;
 
 
 namespace MatriculationExamsServer.services
@@ -17,10 +18,12 @@ namespace MatriculationExamsServer.services
     public class LoginService
     {
         private readonly GoogleSheetApiService _googleSheetApiService;
+        private readonly ColorService _colorService;
 
-        public LoginService(GoogleSheetApiService googleSheetApiService)
+        public LoginService(GoogleSheetApiService googleSheetApiService, ColorService colorService)
         {
             _googleSheetApiService = googleSheetApiService;
+            _colorService = colorService;
         }
         //public async Task<User> GetExamination10th(UserDTO user)
         //{
@@ -55,13 +58,14 @@ namespace MatriculationExamsServer.services
                 User userData = new User() { Id = user.Id, Name = name };
                 return userData;
             }
-            catch (Exception ex) {
+             catch (Google.GoogleApiException ex) { 
                 return null;
             }
         }
 
         public async Task<IList<Exam>> GetExamResults(string rangeData,string classNameNumber, Dictionary<string, string> ranges,string id)
         {
+
             string spreadsheetId = "1_ujxbpru42Pb0NU9kN7y-YyrheMzapDiTE0uSR--k5M";
             var currentSubject = "";
             var subjects =(await _googleSheetApiService.GetSheetDataAsync(spreadsheetId, rangeData)).ToList();
@@ -72,25 +76,28 @@ namespace MatriculationExamsServer.services
             var scores =  (await _googleSheetApiService.GetSheetDataAsync(spreadsheetId, examsRange)).ToList();
             var colorCells =await _googleSheetApiService.GetRangeBackgroundColorsAsync(spreadsheetId, examsRange);
             List<Exam> exams = new List<Exam>();
-             for (int i = 0; i < subjects[0].Count();i++)
+        
+
+            for (int i = 0; i < subjects[0].Count()&&i<colorCells.Count();i++)
             {
                 if (subjects[0][i] != "")
                 {
                     currentSubject = subjects[0][i].ToString();
-                }
-                exams.Add(new Exam(i <scores[0].Count() ? scores[0][i].ToString() : "", subjects[1][i].ToString(), colorCells[i], currentSubject));
 
-            }
+                }
+
+                exams.Add(new Exam(i < scores[0].Count() ? scores[0][i].ToString() : "", currentSubject, _colorService.GetColorName(colorCells[i].Red, colorCells[i].Green, colorCells[i].Blue) ,subjects[1][i].ToString()));
+        }
 
                    return exams;
         }
-        public static string GetColumnName(int columnNumber)
+    public static string GetColumnName(int columnNumber)
+    {
+        string columnName = "";
+        while (columnNumber > 0)
         {
-            string columnName = "";
-            while (columnNumber > 0)
-            {
-                int remainder = (columnNumber - 1) % 26;
-                columnName = (char)(remainder + 'A') + columnName;
+            int remainder = (columnNumber - 1) % 26;
+            columnName = (char)(remainder + 'A') + columnName;
                 columnNumber = (columnNumber - 1) / 26;
             }
             return columnName;

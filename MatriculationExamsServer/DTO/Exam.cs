@@ -4,7 +4,8 @@ namespace MatriculationExamsServer.DTO
 {
     public class Exam
     {
-        public Exam(string ExamScore,string ExamSubject, Color ColorCell,string ExamName)
+        public Exam(string ExamScore,string ExamSubject, string ColorCell,string ExamName)
+
         {
             this.ExamScore = ExamScore;
             this.ExamSubject = ExamSubject;
@@ -20,7 +21,7 @@ namespace MatriculationExamsServer.DTO
         public string ExamSubject{ get; set; }
         public string ExamName { get; set; }
 
-        public Color ColorCell { get; set; }
+        public string ColorCell { get; set; }
      //   public string ExamType { get; set; }
 
     }
