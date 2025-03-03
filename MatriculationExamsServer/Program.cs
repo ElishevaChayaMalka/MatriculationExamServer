@@ -6,17 +6,29 @@ using Microsoft.Extensions.Hosting;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Services;
+using Google.Apis.Sheets.v4;
 var builder = WebApplication.CreateBuilder(args);
 
 // גישה לתצורה
 var Configuration = builder.Configuration;
-string sheetName = "matriculationexams";
-string encodedSheetName = Uri.EscapeDataString(sheetName);
-// Add services to the container.
-builder.Services.AddSingleton(sp => new GoogleSheetApiService(
-    credentialsPath: "matriculationexams-9a2568638e31.json",
-    applicationName: sheetName
-));
+//string sheetName = "matriculationexams";
+//string encodedSheetName = Uri.EscapeDataString(sheetName);
+//// Add services to the container.
+//builder.Services.AddSingleton(sp => new GoogleSheetApiService(
+//    credentialsPath: "matriculationexams-9a2568638e31.json",
+//    applicationName: sheetName
+//));
+string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
+GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
+    .CreateScoped(SheetsService.Scope.Spreadsheets);
+
+var service = new SheetsService(new BaseClientService.Initializer()
+{
+    HttpClientInitializer = credential,
+    ApplicationName = "matriculationexams"
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
