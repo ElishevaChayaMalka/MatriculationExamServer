@@ -1,7 +1,7 @@
 # השתמש בתמונה הרשמית של ASP.NET גרסה 8.0 כהורה
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 5000
 
 # הגדר את התמונה של SDK לבניית האפליקציה
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
