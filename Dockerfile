@@ -1,14 +1,14 @@
-# Use the official image as a parent image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+# השתמש בתמונה הרשמית של ASP.NET גרסה 8.0 כהורה
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-# Set the SDK image for building the app
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+# הגדר את התמונה של SDK לבניית האפליקציה
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["MatriculationExamsServer/MatriculationExamsServer.csproj", "MatriculationExamsServer/"]
 RUN dotnet restore "MatriculationExamsServer/MatriculationExamsServer.csproj"
-COPY . .
+COPY . . 
 WORKDIR "/src/MatriculationExamsServer"
 RUN dotnet build "MatriculationExamsServer.csproj" -c Release -o /app/build
 
