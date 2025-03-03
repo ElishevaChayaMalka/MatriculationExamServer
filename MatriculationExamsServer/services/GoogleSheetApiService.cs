@@ -26,8 +26,11 @@ namespace MatriculationExamsServer.services
         public async Task<IList<IList<object>>> GetSheetDataAsync(string spreadsheetId, string range)
         {
             var request = _sheetsService.Spreadsheets.Values.Get(spreadsheetId, range);
-        //    var cellData = sheet.Data[0].RowData[0].Values[0];
-          //  var backgroundColor = cellData.UserEnteredFormat.BackgroundColor;
+
+            //    var cellData = sheet.Data[0].RowData[0].Values[0];
+            //  var backgroundColor = cellData.UserEnteredFormat.BackgroundColor;
+            ///var spreadsheet = await _sheetsService.Spreadsheets.Get(spreadsheetId).ExecuteAsync();
+
             ValueRange response = await request.ExecuteAsync();
             return response.Values;
         }

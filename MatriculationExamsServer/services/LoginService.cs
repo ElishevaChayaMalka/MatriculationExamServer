@@ -48,6 +48,7 @@ namespace MatriculationExamsServer.services
         {
             try
             {
+
                 string spreadsheetId = "1_ujxbpru42Pb0NU9kN7y-YyrheMzapDiTE0uSR--k5M";
                 var data = await _googleSheetApiService.GetSheetDataAsync(spreadsheetId, rangeId);
                 string index = (data.ToList().FindIndex(x => x.Contains(user.Id)) + 1).ToString();

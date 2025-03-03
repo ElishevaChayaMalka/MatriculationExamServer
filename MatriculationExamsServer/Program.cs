@@ -14,7 +14,7 @@ string sheetName = "matriculationexams";
 string encodedSheetName = Uri.EscapeDataString(sheetName);
 // Add services to the container.
 builder.Services.AddSingleton(sp => new GoogleSheetApiService(
-    credentialsPath: "matriculationexams-4c178fbf1707.json",
+    credentialsPath: "matriculationexams-9a2568638e31.json",
     applicationName: sheetName
 ));
 builder.Services.AddControllers();
