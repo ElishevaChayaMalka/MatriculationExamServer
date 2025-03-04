@@ -1,8 +1,9 @@
-# ����� ������ ������ �� ASP.NET ���� 8.0 �����
+# השתמש בתמונה הרשמית של ASP.NET גרסה 8.0 כהורה
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 5000
-# ���� �� ������ �� SDK ������ ���������
+
+# הגדר את התמונה של SDK לבניית האפליקציה
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["MatriculationExamsServer/MatriculationExamsServer.csproj", "MatriculationExamsServer/"]
@@ -17,5 +18,4 @@ RUN dotnet publish "MatriculationExamsServer.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV ASPNETCORE_URLS=http://+:5000 
 ENTRYPOINT ["dotnet", "MatriculationExamsServer.dll"]

@@ -35,10 +35,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<LoginService>();
 builder.Services.AddSingleton<AuthenticationService>();
 builder.Services.AddSingleton<ColorService>();
-builder.Services.AddScoped<GoogleSheetApiService>(provider =>
-{
-    return new GoogleSheetApiService(jsonCredentials, "matriculationexams");
-});
+builder.Services.AddScoped<GoogleSheetApiService>();
+//    provider =>
+//{
+//    return new GoogleSheetApiService(jsonCredentials, "matriculationexams");
+//});
 
 
 
