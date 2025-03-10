@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using static Google.Apis.Requests.BatchRequest;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace MatriculationExamsServer.Controllers
 {
     [Route("Login/[controller]")]
@@ -42,28 +41,27 @@ namespace MatriculationExamsServer.Controllers
         //// get id and class and return token and user info 
         public async Task<IActionResult> Login([FromBody] UserDTO user)
         {
-            //string sheet = "", rangeId = "", rangeData = "", stageClass = "";
-            //try
-            //{
-            //    rangeId = ranges[$"RangeID{user.ClassNameNumber}Grade"];
-            //    rangeData = ranges[$"RangeUserDetails{user.ClassNameNumber}Grade"];
-            //    var data = await _loginService.GetUser(user, sheet, rangeId, rangeData);
-            //    var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName,user.ClassNameNumber);
+            string sheet = "", rangeId = "", rangeData = "", stageClass = "";
+            try
+            {
+                rangeId = ranges[$"RangeID{user.ClassNameNumber}Grade"];
+                rangeData = ranges[$"RangeUserDetails{user.ClassNameNumber}Grade"];
+                var data = await _loginService.GetUser(user, sheet, rangeId, rangeData);
+                var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName,user.ClassNameNumber);
 
-            //    if (data != null)
+                if (data != null)
 
-            //        return Ok(new
-            //        {
-            //            token,
-            //            data
-            //        });
-            //    return NotFound();
-            //}
-            //catch
-            //{
-            //    return BadRequest();
-            //}
-            return Ok("hello world");
+                    return Ok(new
+                    {
+                        token,
+                        data
+                    });
+                return NotFound();
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
        
         [HttpGet("GetData")]
