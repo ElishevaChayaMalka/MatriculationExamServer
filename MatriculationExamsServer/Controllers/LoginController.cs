@@ -86,5 +86,14 @@ namespace MatriculationExamsServer.Controllers
 
 
         }
+
+        [HttpGet("GetInfo")]
+
+        public async Task<IActionResult> GetInfo()
+        {
+
+            return Ok("hello world");
+
+        }
     }
 }
