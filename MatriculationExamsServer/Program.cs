@@ -56,7 +56,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 var app = builder.Build();
-app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "https://matriculationexam.onrender.com")
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "https://matriculationexam.onrender.com", "https://matriculationexamserver.onrender.com")
             .AllowAnyMethod()
            .AllowAnyHeader()
            .AllowCredentials());
