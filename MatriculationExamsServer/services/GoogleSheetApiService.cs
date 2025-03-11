@@ -16,8 +16,13 @@ namespace MatriculationExamsServer.services
         {
             // var credential = GoogleCredential.FromFile(credentialsPath).CreateScoped(SheetsService.Scope.SpreadsheetsReadonly);
             string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
+            if (string.IsNullOrEmpty(jsonCredentials))
+            {
+                throw new InvalidOperationException("GOOGLE_CREDENTIALS environment variable is missing or empty.");
+            }
             GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
                 .CreateScoped(SheetsService.Scope.Spreadsheets);
+
             _sheetsService = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
