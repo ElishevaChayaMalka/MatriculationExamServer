@@ -1,15 +1,36 @@
-# δωϊξω αϊξεπδ δψωξιϊ ωμ ASP.NET βψρδ 8.0 λδεψδ
+# # οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½ ASP.NET οΏ½οΏ½οΏ½οΏ½ 8.0 οΏ½οΏ½οΏ½οΏ½οΏ½
+# FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+# WORKDIR /app
+# EXPOSE 5000
+
+# # οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½ SDK οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½ οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½οΏ½
+# FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# WORKDIR /src
+# COPY ["MatriculationExamsServer/MatriculationExamsServer.csproj", "MatriculationExamsServer/"]
+# RUN dotnet restore "MatriculationExamsServer/MatriculationExamsServer.csproj"
+# COPY . . 
+# WORKDIR "/src/MatriculationExamsServer"
+# RUN dotnet build "MatriculationExamsServer.csproj" -c Release -o /app/build
+
+# FROM build AS publish
+# RUN dotnet publish "MatriculationExamsServer.csproj" -c Release -o /app/publish
+
+# FROM base AS final
+# WORKDIR /app
+# COPY --from=publish /app/publish .
+# ENTRYPOINT ["dotnet", "MatriculationExamsServer.dll"]
+# Χ‘Χ΅Χ™Χ΅: ΧªΧΧ•Χ Χ” Χ©Χ ASP.NET
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 5000
+EXPOSE 5000  # ΧΧ• 80 ΧΧ Χ”Χ©Χ¨Χª ΧΧΧ–Χ™Χ ΧΆΧ Χ¤Χ•Χ¨Χ 80
 
-# δβγψ ΰϊ δϊξεπδ ωμ SDK μαπιιϊ δΰτμιχφιδ
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-WORKDIR /src
+WORKDIR /app  # Χ’Χ™Χ©Χ” ΧΧªΧ™Χ§Χ™Χ” Χ”Χ¨ΧΧ©Χ™Χª
 COPY ["MatriculationExamsServer/MatriculationExamsServer.csproj", "MatriculationExamsServer/"]
 RUN dotnet restore "MatriculationExamsServer/MatriculationExamsServer.csproj"
-COPY . . 
-WORKDIR "/src/MatriculationExamsServer"
+
+COPY . .  
+WORKDIR "/app/MatriculationExamsServer"
 RUN dotnet build "MatriculationExamsServer.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -17,5 +38,6 @@ RUN dotnet publish "MatriculationExamsServer.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MatriculationExamsServer.dll"]
+COPY --from=publish /app/publish .  # Χ”ΧΆΧªΧ§Χª Χ”Χ§Χ‘Χ¦Χ™Χ Χ”Χ΅Χ•Χ¤Χ™Χ™Χ
+ENTRYPOINT ["dotnet", "MatriculationExamsServer.dll"]  # Χ”Χ¤ΧΆΧΧª Χ”Χ©Χ¨Χª
+
