@@ -12,14 +12,16 @@ namespace MatriculationExamsServer.services
     {
       private readonly SheetsService _sheetsService;
 
-        public GoogleSheetApiService(string credentialsPath, string applicationName)
+        public GoogleSheetApiService()
         {
-            var credential = GoogleCredential.FromFile(credentialsPath).CreateScoped(SheetsService.Scope.SpreadsheetsReadonly);
-
+            // var credential = GoogleCredential.FromFile(credentialsPath).CreateScoped(SheetsService.Scope.SpreadsheetsReadonly);
+            string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
+            GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
+                .CreateScoped(SheetsService.Scope.Spreadsheets);
             _sheetsService = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = applicationName,
+                ApplicationName = "matriculationexams",
             });
         }
 
