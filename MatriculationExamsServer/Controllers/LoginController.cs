@@ -55,7 +55,7 @@ namespace MatriculationExamsServer.Controllers
                 var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName,user.ClassNameNumber);
                 str += "h";
 
-                if (data != null)
+              //  if (data != null)
 
                     return Ok(new
                     {
