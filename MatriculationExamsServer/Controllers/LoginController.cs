@@ -62,12 +62,12 @@ namespace MatriculationExamsServer.Controllers
                         token,
                         data
                     });
-                     return StatusCode(500, "Internal Server Error!"+ str);
+                     return StatusCode(500, "Internal Server Error!"+ str +user);
 
             }
             catch
             {
-                return BadRequest(str);
+                return BadRequest(str+user);
             }
         }
        
