@@ -39,32 +39,68 @@ namespace MatriculationExamsServer.Controllers
         
         [HttpPost]
         //// get id and class and return token and user info 
+        //public async Task<IActionResult> Login([FromBody] UserDTO user)
+        //{
+        //    string sheet = "", rangeId = "", rangeData = "", stageClass = "";
+        //    try
+        //    {
+        //        rangeId = ranges[$"RangeID{user.ClassNameNumber}Grade"];
+        //        rangeData = ranges[$"RangeUserDetails{user.ClassNameNumber}Grade"];
+        //        var data = await _loginService.GetUser(user, sheet, rangeId, rangeData);
+        //        var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName,user.ClassNameNumber);
+
+        //        if (data != null)
+
+        //            return Ok(new
+        //            {
+        //                token,
+        //                data
+        //            });
+        //             return StatusCode(500, "Internal Server Error!");
+
+        //    }
+        //    catch
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
         public async Task<IActionResult> Login([FromBody] UserDTO user)
         {
             string sheet = "", rangeId = "", rangeData = "", stageClass = "";
             try
             {
+                if (!ranges.ContainsKey($"RangeID{user.ClassNameNumber}Grade") ||
+                    !ranges.ContainsKey($"RangeUserDetails{user.ClassNameNumber}Grade"))
+                {
+                    return BadRequest("Invalid class number provided.");
+                }
+
                 rangeId = ranges[$"RangeID{user.ClassNameNumber}Grade"];
                 rangeData = ranges[$"RangeUserDetails{user.ClassNameNumber}Grade"];
+
                 var data = await _loginService.GetUser(user, sheet, rangeId, rangeData);
-                var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName,user.ClassNameNumber);
 
-                if (data != null)
+                if (data == null)
+                {
+                    return StatusCode(500, "Internal Server Error! No data found.");
+                }
 
-                    return Ok(new
-                    {
-                        token,
-                        data
-                    });
-                     return StatusCode(500, "Internal Server Error!");
+                var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName, user.ClassNameNumber);
 
+                return Ok(new
+                {
+                    token,
+                    data
+                });
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                // שווה להחזיר הודעה עם פרטים לפחות בסביבת פיתוח
+                return StatusCode(500, $"Internal Server Error: {ex.Message}");
             }
         }
-       
+
+
         [HttpGet("GetData")]
 
         public async Task<IActionResult> GetData(string token)
