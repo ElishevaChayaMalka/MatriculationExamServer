@@ -56,7 +56,7 @@ namespace MatriculationExamsServer.Controllers
                         token,
                         data
                     });
-                return NotFound();
+                return BadRequest("bad request!!");
             }
             catch
             {
