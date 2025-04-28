@@ -69,29 +69,30 @@ namespace MatriculationExamsServer.Controllers
             string sheet = "", rangeId = "", rangeData = "", stageClass = "";
             try
             {
-                if (!ranges.ContainsKey($"RangeID{user.ClassNameNumber}Grade") ||
-                    !ranges.ContainsKey($"RangeUserDetails{user.ClassNameNumber}Grade"))
-                {
-                    return BadRequest("Invalid class number provided.");
-                }
+                //if (!ranges.ContainsKey($"RangeID{user.ClassNameNumber}Grade") ||
+                //    !ranges.ContainsKey($"RangeUserDetails{user.ClassNameNumber}Grade"))
+                //{
+                //    return BadRequest("Invalid class number provided.");
+                //}
 
-                rangeId = ranges[$"RangeID{user.ClassNameNumber}Grade"];
-                rangeData = ranges[$"RangeUserDetails{user.ClassNameNumber}Grade"];
+                //rangeId = ranges[$"RangeID{user.ClassNameNumber}Grade"];
+                //rangeData = ranges[$"RangeUserDetails{user.ClassNameNumber}Grade"];
 
-                var data = await _loginService.GetUser(user, sheet, rangeId, rangeData);
+                //var data = await _loginService.GetUser(user, sheet, rangeId, rangeData);
 
-                if (data == null)
-                {
-                    return StatusCode(500, "Internal Server Error! No data found.");
-                }
+                //if (data == null)
+                //{
+                //    return StatusCode(500, "Internal Server Error! No data found.");
+                //}
 
-                var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName, user.ClassNameNumber);
+                //var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName, user.ClassNameNumber);
 
-                return Ok(new
-                {
-                    token,
-                    data
-                });
+                //return Ok(new
+                //{
+                //    token,
+                //    data
+                //});
+                return StatusCode(200, "hello world:)");
             }
             catch (Exception ex)
             {
