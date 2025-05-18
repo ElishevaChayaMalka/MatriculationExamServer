@@ -37,6 +37,13 @@ namespace MatriculationExamsServer.services
             ValueRange response = await request.ExecuteAsync();
             return response.Values;
         }
+
+        public async Task<List<string>> GetAllSheetNamesAsync(string spreadsheetId)
+        {
+            var spreadsheet = await _sheetsService.Spreadsheets.Get(spreadsheetId).ExecuteAsync();
+            var sheetNames = spreadsheet.Sheets.Select(s => s.Properties.Title).ToList();
+            return sheetNames;
+        }
         public async Task<List<Color>> GetRangeBackgroundColorsAsync(string spreadsheetId, string range)
         {
             var request = _sheetsService.Spreadsheets.Get(spreadsheetId);
