@@ -15,19 +15,34 @@ namespace MatriculationExamsServer.services
         public GoogleSheetApiService()
         {
             // var credential = GoogleCredential.FromFile(credentialsPath).CreateScoped(SheetsService.Scope.SpreadsheetsReadonly);
-            string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
-            if (string.IsNullOrEmpty(jsonCredentials))
-            {
-                throw new InvalidOperationException("GOOGLE_CREDENTIALS environment variable is missing or empty.");
-            }
-            GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
-                .CreateScoped(SheetsService.Scope.Spreadsheets);
+            ////string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
+            ////if (string.IsNullOrEmpty(jsonCredentials))
+            ////{
+            ////    throw new InvalidOperationException("GOOGLE_CREDENTIALS environment variable is missing or empty.");
+            ////}
+            ////GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
+            ////    .CreateScoped(SheetsService.Scope.Spreadsheets);
+
+            ////_sheetsService = new SheetsService(new BaseClientService.Initializer()
+            ////{
+            ////    HttpClientInitializer = credential,
+            ////    ApplicationName = "matriculationexams",
+            ////});
+        }
+
+        public GoogleSheetApiService(string credentialsPath, string applicationName)
+        {
+            var jsonContent = File.ReadAllText(credentialsPath);
+            GoogleCredential credential = GoogleCredential.FromJson(jsonContent)
+               .CreateScoped(SheetsService.Scope.Spreadsheets);
 
             _sheetsService = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
-                ApplicationName = "matriculationexams",
+                ApplicationName = applicationName,
             });
+
+
         }
 
         public async Task<IList<IList<object>>> GetSheetDataAsync(string spreadsheetId, string range)

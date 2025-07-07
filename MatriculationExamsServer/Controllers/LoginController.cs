@@ -45,16 +45,10 @@ namespace MatriculationExamsServer.Controllers
             string sheet = "", rangeId = "", rangeData = "", stageClass = "";
             try
             {
-                str += "a";
-                rangeId = ranges[$"RangeID{user.ClassNameNumber}Grade"];
-                str += "b";
-                rangeData = ranges[$"RangeUserDetails{user.ClassNameNumber}Grade"];
-                 str += "c";
+                rangeId = user.ClassName + ranges["RangeIDGrade"];
+                rangeData = user.ClassName + ranges["RangeUserDetailsGrade"];
                 var data = await _loginService.GetUser(user, sheet, rangeId, rangeData);
-                str += "d";
-                var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName,user.ClassNameNumber);
-                str += "h";
-
+                var token = _authenticationService.GenerateJwtToken(user.Id, user.ClassName);
                 if (data != null)
 
                     return Ok(new
@@ -62,7 +56,7 @@ namespace MatriculationExamsServer.Controllers
                         token,
                         data
                     });
-                     return StatusCode(500, "Internal Server Error!"+ str +user);
+                     return StatusCode(500, "Internal Server Error!" +user);
 
             }
             catch
@@ -75,18 +69,19 @@ namespace MatriculationExamsServer.Controllers
 
         public async Task<IActionResult> GetData(string token)
         {
-            
+                
             var handler = new JwtSecurityTokenHandler();
             token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             if (handler.CanReadToken(token))
             {
                 var jwtToken = handler.ReadJwtToken(token);
                 var claims = jwtToken.Claims;
-                var classNameNumberClaim = claims.FirstOrDefault(c => c.Type == "classNameNumber")?.Value;
+                var className = claims.FirstOrDefault(c => c.Type == "classRoomName")?.Value;
                 var id = claims.FirstOrDefault(c => c.Type == "id")?.Value;
 
-                string rangeDataSubject = ranges[$"RangeSubject{classNameNumberClaim}Grade"];
-                var data = await _loginService.GetExamResults(rangeDataSubject, classNameNumberClaim, ranges,id);
+                string rangeDataSubject = className  + ranges[$"RangeSubjectGrade"];
+                string rangDataExam = className + ranges["RangeExamsUser"];
+                var data = await _loginService.GetExamResults(rangeDataSubject, rangDataExam, ranges,id, className);
                 return Ok(data);
             }
             return BadRequest();

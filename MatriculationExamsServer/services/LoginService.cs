@@ -64,16 +64,16 @@ namespace MatriculationExamsServer.services
             }
         }
 
-        public async Task<IList<Exam>> GetExamResults(string rangeData,string classNameNumber, Dictionary<string, string> ranges,string id)
+        public async Task<IList<Exam>> GetExamResults(string rangeData,string rangDataExam, Dictionary<string, string> ranges,string id, string classNameSheet)
         {
 
             string spreadsheetId = "1_ujxbpru42Pb0NU9kN7y-YyrheMzapDiTE0uSR--k5M";
             var currentSubject = "";
             var subjects =(await _googleSheetApiService.GetSheetDataAsync(spreadsheetId, rangeData)).ToList();
-            var rangeUserRow = ranges[$"RangeID{classNameNumber}Grade"];
+            var rangeUserRow = classNameSheet+ ranges["RangeIDGrade"];
             var row = (await _googleSheetApiService.GetSheetDataAsync(spreadsheetId, rangeUserRow)).ToList();
             string index = (row.ToList().FindIndex(x => x.Contains(id)) + 1).ToString();
-            var examsRange = ranges[$"RangeExamsUser{classNameNumber}"].Replace("1", index);
+            var examsRange = rangDataExam.Replace("1", index);
             var scores =  (await _googleSheetApiService.GetSheetDataAsync(spreadsheetId, examsRange)).ToList();
             var colorCells =await _googleSheetApiService.GetRangeBackgroundColorsAsync(spreadsheetId, examsRange);
             List<Exam> exams = new List<Exam>();

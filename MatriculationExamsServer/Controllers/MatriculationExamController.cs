@@ -10,7 +10,7 @@ using System;
 
 namespace MatriculationExamsServer.Controllers
 {
-    [Route("Matriculation/[controller]")]
+    [Route("Matriculation")]
     [ApiController]
     public class MatriculationExamController : ControllerBase
     {
