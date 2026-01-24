@@ -24,18 +24,18 @@ string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS"
 GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
     .CreateScoped(SheetsService.Scope.Spreadsheets);
 
-var service = new SheetsService(new BaseClientService.Initializer()
-{
-    HttpClientInitializer = credential,
-    ApplicationName = "matriculationexams"
-});
+//var service = new SheetsService(new BaseClientService.Initializer()
+//{
+//    HttpClientInitializer = credential,
+//    ApplicationName = "matriculationexams"
+//});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<LoginService>();
-builder.Services.AddSingleton<AuthenticationService>();
+builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddSingleton<ColorService>();
 builder.Services.AddScoped<GoogleSheetApiService>();
+builder.Services.AddScoped<LoginService>();
 
 
 
