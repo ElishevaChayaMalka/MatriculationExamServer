@@ -4,7 +4,6 @@ WORKDIR /app
 EXPOSE 5000
 
 # ���� �� ������ �� SDK ������ ���������
-DOTNET_USE_POLLING_FILE_WATCHER=true
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["MatriculationExamsServer/MatriculationExamsServer.csproj", "MatriculationExamsServer/"]
