@@ -33,7 +33,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<AuthenticationService>();
-builder.Services.AddSingleton<ColorService>();
+builder.Services.AddScoped<ColorService>();
 builder.Services.AddScoped<GoogleSheetApiService>();
 builder.Services.AddScoped<LoginService>();
 builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
