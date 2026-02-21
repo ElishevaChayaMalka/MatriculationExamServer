@@ -13,17 +13,27 @@ using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// âéùä ìúöåøä
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 var Configuration = builder.Configuration;
 //string sheetName = "matriculationexams";
 //string encodedSheetName = Uri.EscapeDataString(sheetName);
-////// Add services to the container.
+//// Add services to the container.
 //builder.Services.AddSingleton(sp => new GoogleSheetApiService(
 //    credentialsPath: "matriculationexams-9a2568638e31.json",
 //    applicationName: sheetName
 //));
-string sheetName = "matriculationexams";
-string encodedSheetName = Uri.EscapeDataString(sheetName);
+string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
+GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
+    .CreateScoped(SheetsService.Scope.Spreadsheets);
+
+
+
+
+
+
+
+
+
 // Add services to the container.
 //builder.Services.AddSingleton(sp => new GoogleSheetApiService(
 //    credentialsPath: "matriculationexams-9a2568638e31.json",
