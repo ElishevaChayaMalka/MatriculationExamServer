@@ -9,9 +9,11 @@ using Microsoft.IdentityModel.Tokens;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Services;
 using Google.Apis.Sheets.v4;
+using Microsoft.AspNetCore.HttpOverrides;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// âéùä ìúöåøä
+// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 var Configuration = builder.Configuration;
 //string sheetName = "matriculationexams";
 //string encodedSheetName = Uri.EscapeDataString(sheetName);
