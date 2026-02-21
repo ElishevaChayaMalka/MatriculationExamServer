@@ -40,10 +40,10 @@ namespace MatriculationExamsServer.Controllers
             return NotFound("No data found.");
         }
         [HttpGet("getClasses")]
-        public async Task<List<string>> getListClassesSheet()
+        public async Task<IActionResult> getListClassesSheet()
         {
             var sheetNames = await _googleSheetApiService.GetAllSheetNamesAsync(_spreadsheetId);
-            return sheetNames;
+            return Ok(sheetNames);
         }
 
 
