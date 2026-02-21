@@ -58,7 +58,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 
 var app = builder.Build();
-app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "https://matriculationexam.onrender.com", "https://matriculationexamserver.onrender.com")
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
+
+app.UseCors(builder => builder
+    .WithOrigins(
+        "http://localhost:4200",
+        "https://matriculationexam.onrender.com",
+        "https://matriculationexamserver.onrender.com")
             .AllowAnyMethod()
            .AllowAnyHeader()
            .AllowCredentials());
@@ -71,11 +81,13 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseAuthorization();
 //app.UseCors("AllowAllOrigins");
 var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Urls.Add($"http://*:{port}");
+app.Urls.Add($"http://0.0.0.0:{port}");
+
 app.MapControllers();
 app.Urls.Add("http://0.0.0.0:5000");
 app.Run();
