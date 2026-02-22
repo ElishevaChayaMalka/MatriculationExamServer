@@ -26,30 +26,11 @@ string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS"
 GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
     .CreateScoped(SheetsService.Scope.Spreadsheets);
 
-
-
-
-
-
-
-
-
-// Add services to the container.
-//builder.Services.AddSingleton(sp => new GoogleSheetApiService(
-//    credentialsPath: "matriculationexams-9a2568638e31.json",
-//    applicationName: sheetName
-//));
-
-//string jsonCredentials = Environment.GetEnvironmentVariable("GOOGLE_CREDENTIALS");
-//GoogleCredential credential = GoogleCredential.FromJson(jsonCredentials)
-//    .CreateScoped(SheetsService.Scope.Spreadsheets);
-
 //var service = new SheetsService(new BaseClientService.Initializer()
 //{
 //    HttpClientInitializer = credential,
 //    ApplicationName = "matriculationexams"
 //});
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -77,33 +58,38 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 var app = builder.Build();
 
-//app.UseForwardedHeaders(new ForwardedHeadersOptions
-//{
-//    ForwardedHeaders = ForwardedHeaders.XForwardedProto
-//});
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = ForwardedHeaders.XForwardedProto
+});
 
-app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "https://matriculationexam.onrender.com", "https://matriculationexamserver.onrender.com", "https://localhost:44386/")
-
+app.UseCors(builder => builder
+    .WithOrigins(
+        "http://localhost:4200",
+        "https://matriculationexam.onrender.com",
+        "https://matriculationexamserver.onrender.com")
             .AllowAnyMethod()
            .AllowAnyHeader()
            .AllowCredentials());
-// Configure the HTTP request pipeline.
+    // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 app.UseAuthentication();
-
+app.UseAuthorization();
 
 app.UseAuthorization();
 //app.UseCors("AllowAllOrigins");
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
+app.Urls.Add($"http://0.0.0.0:{port}");
 
-
+app.MapControllers();
+app.Urls.Add("http://0.0.0.0:5000");
 app.Run();
